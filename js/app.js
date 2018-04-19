@@ -13,6 +13,13 @@ let cardsOpened = [];
 let cardMoves = 0;
 let cardMovesCounter = document.querySelector(".moves");
 
+// timer
+let second = 0;
+let minute = 0;
+let hour = 0;
+const timer = document.querySelector(".timer");
+var interval;
+
 // @description start new game when page is refreshed
 document.body.onload = startGame();
 
@@ -34,16 +41,17 @@ function startGame(){
         card.classList.remove('show', 'open', 'match', 'disabled');
         //card.classList.add('open'); // DBG (debug statement)
         deck.appendChild(card);
-    });    
+    }); 
+
     // reset moves
     cardMoves = 0;
     cardMovesCounter.innerHTML = cardMoves;
+
     //reset timer
     second = 0;
     minute = 0; 
     hour = 0;
-    var timer = document.querySelector(".timer");
-    timer.innerHTML = "0 mins 0 secs";
+    timer.innerHTML = minute+"mins "+second+"secs";
     clearInterval(interval);
 }
 
@@ -104,12 +112,8 @@ function cardsSelections(){
     }
 }
 
-var second = 0, minute = 0; hour = 0;
-var timer = document.querySelector(".timer");
-var interval;
 function startTimer(){
     interval = setInterval(function(){
-        timer.innerHTML = minute+"mins "+second+"secs";
         second++;
         if(second == 60){
             minute++;
@@ -119,6 +123,7 @@ function startTimer(){
             hour++;
             minute = 0;
         }
+        timer.innerHTML = minute+"mins "+second+"secs";
         console.log(timer.innerHTML); // DBG
     },1000);
 }
