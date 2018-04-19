@@ -3,9 +3,18 @@
  */
 let card = document.getElementsByClassName("card");
 let cards = [...card];
+// prepare the deck of all cards in the game
+const deck = document.getElementById("cards-deck");
 
 // opened cards array
-var cardsOpened = [];
+let cardsOpened = [];
+
+// number of moves
+let cardMoves = 0;
+let cardMovesCounter = document.querySelector(".moves");
+
+// @description start new game when page is refreshed
+document.body.onload = startGame();
 
 /*
  * Display the cards on the page
@@ -13,18 +22,30 @@ var cardsOpened = [];
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-// prepare the deck of all cards in the game
-const deck = document.getElementById("cards-deck");
-cards = shuffle(cards);
-// remove existing deck DOM
-deck.innerHTML = '';
-// remove all exisiting classes from each card
-// attach each card to the deck
-cards.forEach.call(cards, function(card) {
-    card.classList.remove('show', 'open', 'match', 'disabled');
-    //card.classList.add('open'); // DBG (debug statement)
-    deck.appendChild(card);
-});
+
+// @description start a new game 
+function startGame(){
+    cards = shuffle(cards);
+    // remove existing deck DOM
+    deck.innerHTML = '';
+    // remove all exisiting classes from each card
+    // attach each card to the deck
+    cards.forEach.call(cards, function(card) {
+        card.classList.remove('show', 'open', 'match', 'disabled');
+        //card.classList.add('open'); // DBG (debug statement)
+        deck.appendChild(card);
+    });    
+    // reset moves
+    cardMoves = 0;
+    cardMovesCounter.innerHTML = cardMoves;
+    //reset timer
+    second = 0;
+    minute = 0; 
+    hour = 0;
+    var timer = document.querySelector(".timer");
+    timer.innerHTML = "0 mins 0 secs";
+    clearInterval(interval);
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -63,7 +84,41 @@ deck.addEventListener('click', function (event) {
         cardsOpened.push(clicked);        
         console.log(clicked.type);  // DBG
     };
+    cardsSelections();
     if (cards.length == cardsOpened.length) {
         console.log ('All cards clicked!'); // DBG
     }
  });
+
+ // @description count player's moves
+function cardsSelections(){
+    cardMoves++;
+    cardMovesCounter.innerHTML = cardMoves;
+
+    //start timer on first click
+    if(cardMoves == 1){
+        second = 0;
+        minute = 0; 
+        hour = 0;
+        startTimer();
+    }
+}
+
+var second = 0, minute = 0; hour = 0;
+var timer = document.querySelector(".timer");
+var interval;
+function startTimer(){
+    interval = setInterval(function(){
+        timer.innerHTML = minute+"mins "+second+"secs";
+        second++;
+        if(second == 60){
+            minute++;
+            second=0;
+        }
+        if(minute == 60){
+            hour++;
+            minute = 0;
+        }
+        console.log(timer.innerHTML); // DBG
+    },1000);
+}
