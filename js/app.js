@@ -8,6 +8,7 @@ const deck = document.getElementById("cards-deck");
 
 // opened cards array
 let cardsOpened = [];
+let cardsMatchedNum = 0;
 
 // number of moves
 let cardMoves = 0;
@@ -42,6 +43,8 @@ function startGame(){
         //card.classList.add('open'); // DBG (debug statement)
         deck.appendChild(card);
     }); 
+    cardsOpened = [];
+    cardsMatchedNum = 0;
 
     // reset moves
     cardMoves = 0;
@@ -85,21 +88,28 @@ deck.addEventListener('click', function (event) {
     let clicked = event.target;
 
     // Do not allow the grid section itself to be selected; only select divs inside the grid
-    if (clicked.nodeName === 'SECTION') { console.log('deck clicked'); return; }    // DBG
-  
-    if (cards.length > cardsOpened.length) {
-        clicked.classList.add('open', 'show');
-        cardsOpened.push(clicked);        
-        console.log(clicked.type);  // DBG
-    };
-    cardsSelections();
-    if (cards.length == cardsOpened.length) {
-        console.log ('All cards clicked!'); // DBG
+    if (clicked.nodeName === 'UL') {
+    	console.log('Opened card\'s frame clicked');	// DBG
+    	return; 
     }
+  
+    if (cards.length > cardsMatchedNum) {
+        cardsOpened.push(clicked);
+        cardDisplay(clicked);
+        cardCheck();        
+        // console.log('Type: ' + clicked.type + ' NodeName: ' + clicked.nodeName);  // DBG
+    };
  });
 
+ // @description Display selected card
+function cardDisplay(cardSelected){
+    cardSelected.classList.add('open', 'show', 'disabled');
+}
+
  // @description count player's moves
-function cardsSelections(){
+function cardCheck(){
+
+    // increment and update counter
     cardMoves++;
     cardMovesCounter.innerHTML = cardMoves;
 
@@ -110,8 +120,21 @@ function cardsSelections(){
         hour = 0;
         startTimer();
     }
+    // check for matching
+    if (cardsOpened.length == 2) {
+        if (cardsOpened[0].type == cardsOpened[1].type ) {
+            cardsMatched();
+            cardsMatchedNum++;
+            if (cards.length == (cardsMatchedNum * 2)) {
+                console.log ('All cards matched!'); // DBG, TODO - open modal window
+                clearInterval(interval);
+            }
+        } else {
+            cardsNotMatched();
+        }
+    }
 }
-
+// @description 
 function startTimer(){
     interval = setInterval(function(){
         second++;
@@ -124,6 +147,50 @@ function startTimer(){
             minute = 0;
         }
         timer.innerHTML = minute+"mins "+second+"secs";
-        console.log(timer.innerHTML); // DBG
+        // console.log(timer.innerHTML); // DBG
     },1000);
+}
+
+// @description 
+function cardsMatched(){
+    console.log('cardsMatched'); // DBG
+    cardsOpened[0].classList.add('match');
+    cardsOpened[1].classList.add('match');
+    cardsOpened = [];
+}
+
+// @description 
+function cardsNotMatched(){
+    console.log('cardsNotMatched');  // DBG
+    cardsOpened[0].classList.add('notmatched');
+    cardsOpened[1].classList.add('notmatched');
+    cardsDisable();
+    setTimeout(function(){
+        cardsOpened[0].classList.remove('open', 'show', 'notmatched');
+        cardsOpened[1].classList.remove('open', 'show', 'notmatched');
+        cardsEnable();
+        cardsOpened = [];
+    },1100);
+}
+
+// @description 
+// matched cards allready disabled
+function cardsDisable(){
+    console.log('cardsDisable');  // DBG
+    cards.forEach.call(cards, function(card) {
+        if (!card.classList.contains('match')) {
+            card.classList.add('disabled');
+        }
+    }); 
+}
+
+// @description 
+// all but matched
+function cardsEnable(){
+    console.log('cardsEnable');  // DBG
+    cards.forEach.call(cards, function(card) {
+        if (!card.classList.contains('match')) {
+            card.classList.remove('disabled');
+        }
+    }); 
 }
