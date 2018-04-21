@@ -152,6 +152,9 @@ function startTimer(){
 }
 
 // @description 
+// Note: for the animation of matched and not matched cards used Daniel's Eden, Animate CSS, 
+//       see https://daneden.github.io/animate.css/ 
+//       see https://github.com/daneden/animate.css/blob/master/README.md 
 function cardsMatched(){
     console.log('cardsMatched'); // DBG
     cardsOpened[0].classList.add('match', 'animated', 'tada');
