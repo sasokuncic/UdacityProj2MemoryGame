@@ -154,20 +154,25 @@ function startTimer(){
 // @description 
 function cardsMatched(){
     console.log('cardsMatched'); // DBG
-    cardsOpened[0].classList.add('match');
-    cardsOpened[1].classList.add('match');
-    cardsOpened = [];
-}
+    cardsOpened[0].classList.add('match', 'animated', 'tada');
+    cardsOpened[1].classList.add('match', 'animated', 'tada');
+    cardsDisable();
+    setTimeout(function(){
+        cardsOpened[0].classList.remove('open', 'show', 'notmatched', 'animated', 'tada');
+        cardsOpened[1].classList.remove('open', 'show', 'notmatched', 'animated', 'tada');
+        cardsEnable();
+        cardsOpened = [];
+    },1100);}
 
 // @description 
 function cardsNotMatched(){
     console.log('cardsNotMatched');  // DBG
-    cardsOpened[0].classList.add('notmatched');
-    cardsOpened[1].classList.add('notmatched');
+    cardsOpened[0].classList.add('notmatched', 'animated', 'wobble');
+    cardsOpened[1].classList.add('notmatched', 'animated', 'wobble');
     cardsDisable();
     setTimeout(function(){
-        cardsOpened[0].classList.remove('open', 'show', 'notmatched');
-        cardsOpened[1].classList.remove('open', 'show', 'notmatched');
+        cardsOpened[0].classList.remove('open', 'show', 'notmatched', 'animated', 'wobble');
+        cardsOpened[1].classList.remove('open', 'show', 'notmatched', 'animated', 'wobble');
         cardsEnable();
         cardsOpened = [];
     },1100);
