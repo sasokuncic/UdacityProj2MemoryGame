@@ -112,6 +112,10 @@ h1 {
     display: inline-block;
 }
 
+.fa-star {
+	color: #FFEB3B;
+}
+
 .score-panel .restart {
     float: right;
     cursor: pointer;

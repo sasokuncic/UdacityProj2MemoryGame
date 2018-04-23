@@ -14,6 +14,9 @@ let cardsMatchedNum = 0;
 let cardMoves = 0;
 let cardMovesCounter = document.querySelector('.moves');
 
+ // rating - stars list
+ let stars = document.querySelectorAll(".stars li");
+
 // timer
 let second = 0;
 let minute = 0;
@@ -50,7 +53,13 @@ function startGame(){
     cardMoves = 0;
     cardMovesCounter.innerHTML = cardMoves;
 
-    //reset timer
+    // reset rating
+    stars.forEach.call(stars, function(star) {
+        //star.style.color = "#FFD700";
+        star.style.visibility = "visible";
+    }); 
+
+    // reset timer
     second = 0;
     minute = 0; 
     hour = 0;
@@ -108,19 +117,10 @@ function cardDisplay(cardSelected){
 
  // @description count player's moves
 function cardCheck(){
-    // increment and update counter
-    cardMoves++;
-    cardMovesCounter.innerHTML = cardMoves;
 
-    //start timer on first click
-    if(cardMoves == 1){
-        second = 0;
-        minute = 0; 
-        hour = 0;
-        startTimer();
-    }
     // check for matching
     if (cardsOpened.length == 2) {
+        updateMovesAndRating();
         if (cardsOpened[0].type == cardsOpened[1].type ) {
             cardsMatched();
             cardsMatchedNum++;
@@ -130,6 +130,37 @@ function cardCheck(){
             }
         } else {
             cardsNotMatched();
+        }
+    }
+}
+
+// @description Update number of moves, start timer on the first move, update rating
+function updateMovesAndRating(){
+
+    // increment and update moves counter
+    cardMoves++;
+    cardMovesCounter.innerHTML = cardMoves;
+
+    //start timer on the first move
+    if(cardMoves == 1){
+        second = 0;
+        minute = 0; 
+        hour = 0;
+        startTimer();
+    }
+
+    // update rating according to number of moves
+    if (cardMoves > 12 && cardMoves <= 24){
+        for( i= 0; i < 3; i++){
+            if(i > 1){
+                stars[i].style.visibility = "collapse";
+            }
+        }
+    } else if (cardMoves > 24){
+        for( i= 0; i < 3; i++){
+            if(i > 0){
+                stars[i].style.visibility = "collapse";
+            }
         }
     }
 }
