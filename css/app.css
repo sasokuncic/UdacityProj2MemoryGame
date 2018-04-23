@@ -32,8 +32,10 @@ body {
 h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
-    font-size: 7vw;
+    font-size: 6vw;
     color:  #2e3d49;
+    margin-bottom: auto;
+    margin-top: auto;
 }
 
 /*
@@ -42,7 +44,8 @@ h1 {
 
 .deck {
     width: 85%;
-    min-width: 300px;
+    min-width: 260px;
+    max-width: 710px;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
     padding: 1rem;
     border-radius: 10px;
@@ -100,8 +103,9 @@ h1 {
 .score-panel {
     text-align: left;
     width: 80%;
+    max-width: 710px;
     margin-bottom: 10px;
-    font-size: 4vw;
+    font-size: 3vw;
     color: #aa7ecd;
 }
 
@@ -136,10 +140,9 @@ h1 {
  * Responsive styles
  */
 
-@media screen and (max-width: 370px) {
+@media screen and (max-width: 375px) {
     .deck {
         width: calc(80% - 2px);
-        margin: 0.5em;
     }
     .deck .card {
         height: 3rem;
@@ -148,26 +151,24 @@ h1 {
     }
 }
 
-@media screen and (min-width: 371px) {
+@media screen and (min-width: 376px) {
     .deck {
         width: calc(100% - 8px);
-        /* margin: 2em; */
     }
     .deck .card {
-        height: 5rem;
-        width: 5rem;
+        height: 6rem;
+        width: 6rem;
         margin: 4px;
     }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 590px) {
     .deck {
         width: 100%;
-        margin: 3em;
     }
     .deck .card {
-        height: 7rem;
-        width: 7rem;
+        height: 8rem;
+        width: 8rem;
         margin: 5px;
     }
 }
