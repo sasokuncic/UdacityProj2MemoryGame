@@ -1,10 +1,10 @@
 /*
  * Create a list that holds all of your cards
  */
-let card = document.getElementsByClassName("card");
+let card = document.getElementsByClassName('card');
 let cards = [...card];
 // prepare the deck of all cards in the game
-const deck = document.getElementById("cards-deck");
+const deck = document.getElementById('cards-deck');
 
 // opened cards array
 let cardsOpened = [];
@@ -12,13 +12,13 @@ let cardsMatchedNum = 0;
 
 // number of moves
 let cardMoves = 0;
-let cardMovesCounter = document.querySelector(".moves");
+let cardMovesCounter = document.querySelector('.moves');
 
 // timer
 let second = 0;
 let minute = 0;
 let hour = 0;
-const timer = document.querySelector(".timer");
+const timer = document.querySelector('.timer');
 var interval;
 
 // @description start new game when page is refreshed
@@ -26,7 +26,7 @@ document.body.onload = startGame();
 
 /*
  * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
+ *   - shuffle the list of cards using the provided 'shuffle' method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
@@ -54,7 +54,7 @@ function startGame(){
     second = 0;
     minute = 0; 
     hour = 0;
-    timer.innerHTML = minute+"mins "+second+"secs";
+    timer.innerHTML = minute+'mins '+second+'secs';
     clearInterval(interval);
 }
 
@@ -75,7 +75,7 @@ function shuffle(array) {
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+ *  - add the card to a *list* of 'open' cards (put this functionality in another function that you call from this one)
  *  - if the list already has another card, check to see if the two cards match
  *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
  *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
@@ -108,7 +108,6 @@ function cardDisplay(cardSelected){
 
  // @description count player's moves
 function cardCheck(){
-
     // increment and update counter
     cardMoves++;
     cardMovesCounter.innerHTML = cardMoves;
@@ -134,7 +133,8 @@ function cardCheck(){
         }
     }
 }
-// @description 
+
+// @description Game Timer
 function startTimer(){
     interval = setInterval(function(){
         second++;
@@ -146,7 +146,7 @@ function startTimer(){
             hour++;
             minute = 0;
         }
-        timer.innerHTML = minute+"mins "+second+"secs";
+        timer.innerHTML = minute+'mins '+second+'secs';
         // console.log(timer.innerHTML); // DBG
     },1000);
 }
@@ -165,7 +165,8 @@ function cardsMatched(){
         cardsOpened[1].classList.remove('open', 'show', 'notmatched', 'animated', 'tada');
         cardsEnable();
         cardsOpened = [];
-    },1100);}
+    },800);
+}
 
 // @description 
 function cardsNotMatched(){
@@ -178,7 +179,7 @@ function cardsNotMatched(){
         cardsOpened[1].classList.remove('open', 'show', 'notmatched', 'animated', 'wobble');
         cardsEnable();
         cardsOpened = [];
-    },1100);
+    },900);
 }
 
 // @description 
