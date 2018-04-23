@@ -19,6 +19,7 @@ body {
 body {
     background: #ffffff url(../img/geometry2.png); /* Background pattern from Subtle Patterns */
     font-family: 'Coda', cursive;
+    color: darkblue
 }
 
 .container {
@@ -31,6 +32,8 @@ body {
 h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
+    font-size: 7vw;
+    color:  #2e3d49;
 }
 
 /*
@@ -38,26 +41,26 @@ h1 {
  */
 
 .deck {
-    width: 660px;
-    min-height: 680px;
+    width: 85%;
+    min-width: 300px;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
-    padding: 32px;
+    padding: 1rem;
     border-radius: 10px;
     box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    margin: 0 0 3em;
 }
 
 .deck .card {
-    height: 125px;
-    width: 125px;
+    height: 80px;
+    width: 80px;
     background: #2e3d49;
     font-size: 0;
     color: #ffffff;
     border-radius: 8px;
+    border: 30px;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -71,19 +74,19 @@ h1 {
 }
 
 .deck .card.show {
-    font-size: 33px;
+    font-size: 7vw;
 }
 
 .deck .card.match {
     cursor: default;
     background: #02ccba;
-    font-size: 33px;
+    font-size: 7vw;
 }
 
 .deck .card.notmatched {
     cursor: default;
     background: #e2043b;
-    font-size: 33px;
+    font-size: 7vw;
 }
 
 .deck .card.disabled {
@@ -96,8 +99,10 @@ h1 {
 
 .score-panel {
     text-align: left;
-    width: 345px;
+    width: 80%;
     margin-bottom: 10px;
+    font-size: 4vw;
+    color: #aa7ecd;
 }
 
 .score-panel .stars {
@@ -119,6 +124,7 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+    color: #e2043b
 }
 
 .timer {
@@ -126,18 +132,42 @@ h1 {
 	margin: 0 1rem;
 }
 
-/* ******************************
-   RESPONSIVE STYLES
-*********************************  */
+/*
+ * Responsive styles
+ */
 
-@media screen and (max-width: 379px) {
-
+@media screen and (max-width: 370px) {
+    .deck {
+        width: calc(80% - 2px);
+        margin: 0.5em;
+    }
+    .deck .card {
+        height: 3rem;
+        width: 3rem;
+        margin: 3px;
+    }
 }
 
-@media screen and (min-width: 440px) {
-
+@media screen and (min-width: 371px) {
+    .deck {
+        width: calc(100% - 8px);
+        /* margin: 2em; */
+    }
+    .deck .card {
+        height: 5rem;
+        width: 5rem;
+        margin: 4px;
+    }
 }
 
 @media screen and (min-width: 800px) {
-
+    .deck {
+        width: 100%;
+        margin: 3em;
+    }
+    .deck .card {
+        height: 7rem;
+        width: 7rem;
+        margin: 5px;
+    }
 }
