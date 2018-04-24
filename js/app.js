@@ -1,6 +1,9 @@
-/*
- * Create a list that holds all of your cards
- */
+
+/* **************************************************
+  * Google Udacity FEND Lesson 24, Memory Game
+  ************************************************** */
+// @description game initialization 
+ // 
 let card = document.getElementsByClassName('card');
 let cards = [...card];
 // prepare the deck of all cards in the game
@@ -16,6 +19,7 @@ let cardMovesCounter = document.querySelector('.moves');
 
  // rating - stars list
  let stars = document.querySelectorAll(".stars li");
+ let starsNumber = 3;
 
 // timer
 let second = 0;
@@ -24,17 +28,15 @@ let hour = 0;
 const timer = document.querySelector('.timer');
 var interval;
 
+// Modal window
+var modal = document.getElementById("endOfGame");
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
 // @description start new game when page is refreshed
 document.body.onload = startGame();
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided 'shuffle' method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
-// @description start a new game 
+// @description new game start
 function startGame(){
     cards = shuffle(cards);
     // remove existing deck DOM
@@ -67,7 +69,8 @@ function startGame(){
     clearInterval(interval);
 }
 
-// Shuffle function from http://stackoverflow.com/a/2450976
+// @description Deck cards shuffle function
+// From http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -81,17 +84,7 @@ function shuffle(array) {
     return array;
 }
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of 'open' cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
+ // @description Deck (and cards) event listener
 deck.addEventListener('click', function (event) {
     // The event target is our clicked item
     let clicked = event.target;
@@ -127,6 +120,7 @@ function cardCheck(){
             if (cards.length == (cardsMatchedNum * 2)) {
                 console.log ('All cards matched!'); // DBG, TODO - open modal window
                 clearInterval(interval);
+                openModalWindow();
             }
         } else {
             cardsNotMatched();
@@ -150,13 +144,16 @@ function updateMovesAndRating(){
     }
 
     // update rating according to number of moves
+    starsNumber = 3;
     if (cardMoves > 12 && cardMoves <= 24){
+        starsNumber = 2;
         for( i= 0; i < 3; i++){
             if(i > 1){
                 stars[i].style.visibility = "collapse";
             }
         }
     } else if (cardMoves > 24){
+        starsNumber = 1;
         for( i= 0; i < 3; i++){
             if(i > 0){
                 stars[i].style.visibility = "collapse";
@@ -184,8 +181,7 @@ function startTimer(){
 
 // @description 
 // Note: for the animation of matched and not matched cards used Daniel's Eden, Animate CSS, 
-//       see https://daneden.github.io/animate.css/ 
-//       see https://github.com/daneden/animate.css/blob/master/README.md 
+//       from https://github.com/daneden/animate.css/blob/master/README.md 
 function cardsMatched(){
     console.log('cardsMatched'); // DBG
     cardsOpened[0].classList.add('match', 'animated', 'tada');
@@ -213,7 +209,7 @@ function cardsNotMatched(){
     },900);
 }
 
-// @description 
+// @description Disable cards
 // matched cards allready disabled
 function cardsDisable(){
     console.log('cardsDisable');  // DBG
@@ -224,7 +220,7 @@ function cardsDisable(){
     }); 
 }
 
-// @description 
+// @description Enable cards
 // all but matched
 function cardsEnable(){
     console.log('cardsEnable');  // DBG
@@ -233,4 +229,24 @@ function cardsEnable(){
             card.classList.remove('disabled');
         }
     }); 
+}
+
+// @description Modal window 
+function openModalWindow() {
+    modal.style.display = "block";
+    document.getElementById("finalMoves").innerHTML = cardMoves;
+    document.getElementById("finalStars").innerHTML = starsNumber;
+}
+
+// @description Close modal window by clicking icon (x) <span>
+span.onclick = function() {
+    modal.style.display = "none";
+    console.log('Close icon of the modal window selected');   // DBG
+}
+
+// @description btn Play Again in modal window clicked
+function playAgain() {
+    modal.style.display = "none";
+    console.log('Play again button clicked');   // DBG
+    startGame();
 }
